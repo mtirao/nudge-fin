@@ -1,20 +1,53 @@
+# NudgeFin 🧠💸
 
-1. Resumen Ejecutivo
+**NudgeFin** is a mobile personal finance application driven by behavioral economics (*FinTech + Behavioral Economics*). Unlike traditional budget trackers that record expenses reactively, NudgeFin utilizes predictive analytics to identify critical time windows when a user is highly prone to impulsive spending. The platform then deploys a "Nudge" (a preventive, contextual push notification) 30 minutes prior to the spending window, helping users curb the impulse and redirect that capital toward an emotionally rewarding savings goal.
 
-NudgeFin es una aplicación móvil de finanzas personales conductuales (FinTech + Behavioral Economics). A diferencia de las apps tradicionales que registran gastos de forma reactiva, NudgeFin utiliza análisis predictivo para identificar las ventanas de tiempo críticas donde el usuario gasta dinero de forma impulsiva y envía un "Nudge" (notificación push preventiva) 30 minutos antes para evitar el gasto, redirigiendo ese capital hacia una meta de ahorro motivacional.
+---
 
-2. Stack Tecnológico Aprobado
+## 🚀 MVP Features
+- **Emotional Impact Dashboard:** Live visualization of savings progress indexed to tangible real-world goals (e.g., "Trip to Japan") alongside our North Star metric: *Rescued Cash*.
+- **Predictive Habit Engine:** A lightweight Python algorithm that analyzes financial history logs to isolate recurring temporal patterns of impulsive spending.
+- **Contextual Preventive Alerts:** An asynchronous scheduling system that delivers behavioral interventions exactly when the user is most financially vulnerable.
 
-• Frontend: React Native (Expo) + TypeScript + Tailwind CSS (NativeWind) o StyleSheet.
-• Backend: Python (FastAPI) + Uvicorn + Pydantic.
-• Base de Datos: PostgreSQL (alojado en Supabase para manejo rápido de Auth y almacenamiento).
-• Análisis de Datos: Pandas + NumPy (para el procesamiento de patrones temporales).
-• Notificaciones: Expo Notifications (Locales para MVP) / Firebase Cloud Messaging (FCM para Producción).
+## 🛠️ Tech Stack
+- **Frontend:** React Native (Expo), TypeScript, StyleSheet.
+- **Backend:** Python, FastAPI, Pandas (Data Science Pipeline).
+- **Database:** PostgreSQL (Hosted on Supabase).
+- **Infrastructure:** Firebase Cloud Messaging / Expo Notifications.
 
-3. Flujo Crítico de Datos (User Journey Técnico)
+---
 
-1. El usuario ingresa su meta (ej. "Viaje a Japón - $3,000").
-2. El usuario carga su historial de gastos (simulado vía archivo CSV o Mock API).
-3. El Backend analiza los timestamps de los gastos y detecta anomalías o picos repetitivos (ej. Todos los viernes a las 7:00 PM).
-4. El sistema agenda un cron job o alerta que detona una notificación push al celular del usuario a las 6:30 PM.
-5. El usuario decide si cede al impulso o ahorra. Si ahorra, lo registra y se actualiza el contador de "Dinero Rescatado".
+## 📁 Project Structure
+
+```text
+nudgefin/
+├── nudgefin-app/       # Frontend - Mobile Application (React Native + Expo)
+└── nudgefin-backend/   # Backend - API & Data Engine (FastAPI + Python)
+```
+
+## 🛠️ Local Setup
+
+### Prerequisites
+- Node.js (v18 or higher)
+- Python (3.10 or higher)
+- Expo Go app installed on your physical mobile device
+
+### Getting Started
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com
+   cd nudgefin
+   ```
+
+2. **Backend Configuration:**
+   *Installation instructions coming soon under block 1.3.*
+
+3. **Frontend Configuration:**
+   *Installation instructions coming soon under block 1.2.*
+
+---
+
+## 🛡️ Privacy & Security (Startup Guidelines)
+As a FinTech application, data privacy is our core foundation:
+- End-to-end data security in transit and at rest managed via Supabase/PostgreSQL.
+- Data minimization architecture: processed transaction history is optimized into temporal matrices without permanently storing sensitive financial logs.
