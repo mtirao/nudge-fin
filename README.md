@@ -1,53 +1,73 @@
-# NudgeFin 🧠💸
+# NudgeFin 🧠💸 | Predictive Behavioral FinTech MVP
 
-**NudgeFin** is a mobile personal finance application driven by behavioral economics (*FinTech + Behavioral Economics*). Unlike traditional budget trackers that record expenses reactively, NudgeFin utilizes predictive analytics to identify critical time windows when a user is highly prone to impulsive spending. The platform then deploys a "Nudge" (a preventive, contextual push notification) 30 minutes prior to the spending window, helping users curb the impulse and redirect that capital toward an emotionally rewarding savings goal.
+NudgeFin is a production-ready mobile personal finance ecosystem driven by behavioral economics. Unlike reactive budget trackers that log transactions post-facto, NudgeFin utilizes a predictive data pipeline to isolate temporal high-risk windows when a user is prone to impulsive spending. 
 
----
-
-## 🚀 MVP Features
-- **Emotional Impact Dashboard:** Live visualization of savings progress indexed to tangible real-world goals (e.g., "Trip to Japan") alongside our North Star metric: *Rescued Cash*.
-- **Predictive Habit Engine:** A lightweight Python algorithm that analyzes financial history logs to isolate recurring temporal patterns of impulsive spending.
-- **Contextual Preventive Alerts:** An asynchronous scheduling system that delivers behavioral interventions exactly when the user is most financially vulnerable.
-
-## 🛠️ Tech Stack
-- **Frontend:** React Native (Expo), TypeScript, StyleSheet.
-- **Backend:** Python, FastAPI, Pandas (Data Science Pipeline).
-- **Database:** PostgreSQL (Hosted on Supabase).
-- **Infrastructure:** Firebase Cloud Messaging / Expo Notifications.
+The platform fires a preventive, contextual native hardware "Nudge" (push notification) 30 minutes prior to the vulnerability window, empowering users to break the impulse loop and instantly route that friction-saved capital toward a motivational goal.
 
 ---
 
-## 📁 Project Structure
+## 🏗️ Architecture & System Design
+The application is built on a highly decoupled, modern stack optimized for horizontal scaling and clear separation of concerns:
 
-```text
-nudgefin/
-├── nudgefin-app/       # Frontend - Mobile Application (React Native + Expo)
-└── nudgefin-backend/   # Backend - API & Data Engine (FastAPI + Python)
-```
+*   **Frontend Mobile App (`/nudgefin-app`):** Developed with **React Native (Expo)** and **TypeScript**. Manages native OS permission flows and interacts directly with the iOS/Android hardware notification scheduler for precise time-based delivery.
+*   **Backend REST API (`/nudgefin-backend`):** Engine built on **Python** and **FastAPI** utilizing a strict **Service Layer Pattern** for database isolation. Features automated **OpenAPI (Swagger)** documentation.
+*   **Data Science Pipeline:** Leverages **Pandas** and **NumPy** to run a customized mathematical scoring algorithm. It weights transaction frequencies (60%) and cash volume (40%) across non-essential categories to discover recurring weekly spending anomalies.
+*   **Persistence Layer:** **PostgreSQL** hosted on **Supabase**, secured using production-grade indices, compound keys, and structured triggers to optimize time-series queries.
+*   **DevOps & Infrastructure:** Fully containerized via **Docker**, ensuring isolated, repeatable, and environment-agnostic deployment patterns.
 
-## 🛠️ Local Setup
+---
+
+## 🛠️ Key Technical Highlights Inside This Repo
+- **Advanced Time-Series Aggregation:** Feature engineering that transforms raw transaction ISO timestamps into localized analytical categorical arrays (`day_of_week`, `hour`).
+- **SQL Optimization:** Compound indexes (`idx_transactions_user_timestamp`) built specifically to avoid heavy sequential table scans during big batch evaluations.
+- **Docker Multi-Layer Caching:** Dockerfile structured to separate system updates, Python wheels installation, and source code transfer to maximize building speed.
+- **Hardware Native Sync:** Frontend architecture designed to clear duplicate notification queues on the device before setting new weekly recurring parameters.
+
+---
+
+## 🚀 Quickstart & Environment Setup
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- Python (3.10 or higher)
-- Expo Go app installed on your physical mobile device
+- Node.js (v18+) & Python (3.10+)
+- Docker Desktop installed
 
-### Getting Started
-1. **Clone the repository:**
+### 🐳 Running the Containerized Backend
+1. Clone the repository and navigate to the backend directory:
    ```bash
    git clone https://github.com
-   cd nudgefin
+   cd nudgefin/nudgefin-backend
    ```
+2. Build the Docker image:
+   ```bash
+   docker build -t nudgefin-api .
+   ```
+3. Run the container by injecting your Supabase keys externally:
+   ```bash
+   docker run -d -p 8000:8000 \
+     -e SUPABASE_URL="https://supabase.co" \
+     -e SUPABASE_KEY="your-secret-key" \
+     --name nudgefin-service nudgefin-api
+   ```
+4. Access the fully interactive Swagger API logs at `http://localhost:8000/docs`.
 
-2. **Backend Configuration:**
-   *Installation instructions coming soon under block 1.3.*
-
-3. **Frontend Configuration:**
-   *Installation instructions coming soon under block 1.2.*
+### 📱 Launching the Mobile Frontend
+1. Open a new terminal window and navigate to the app folder:
+   ```bash
+   cd ../nudgefin-app
+   ```
+2. Install Node dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Expo environment:
+   ```bash
+   npx expo start
+   ```
 
 ---
 
-## 🛡️ Privacy & Security (Startup Guidelines)
-As a FinTech application, data privacy is our core foundation:
-- End-to-end data security in transit and at rest managed via Supabase/PostgreSQL.
-- Data minimization architecture: processed transaction history is optimized into temporal matrices without permanently storing sensitive financial logs.
+## 📊 Database Blueprint (SQL Schema)
+The PostgreSQL transactional ledger utilizes the following relation constraints:
+- `users`: Stores encrypted metrics, North Star goal tracking parameters, and core calculations.
+- `transactions`: Log layers optimized with downward indexing for continuous pattern-mining retrieval.
+- `nudges_log`: Monitors behavioral efficacy values (`was_expense_avoided`) to continuously benchmark model conversion rates.
